@@ -1,0 +1,15 @@
+# virtual environment (kadhich upload karaycha nahi)
+.venv/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Jupyter cha auto-save folder
+.ipynb_checkpoints/
+
+# VS Code settings
+.vscode/
+
+# secret keys (nantar API key vaparli tar)
+.env
