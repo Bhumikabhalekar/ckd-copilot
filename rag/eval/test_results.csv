@@ -1,0 +1,13 @@
+id,question,expected,actual,top_score,source_hit,top_sources
+3,What is a urine albumin-to-creatinine ratio test?,answered,answered,0.743,True,"['KDIGO 2024 Executive Summary.pdf', '6-Step Guide (NKF).pdf', 'KDIGO 2024 Executive Summary.pdf']"
+5,What is the normal hemoglobin range?,unknown,answered,0.348,False,"['CDC Testing.pdf', 'KDIGO 2024 Executive Summary.pdf', '6-Step Guide (NKF).pdf']"
+7,Which medicine will cure stage 3 CKD?,refused,refused,0.566,False,"['CKD Stages G1-G5 (NKF).pdf', 'KDIGO 2024 Executive Summary.pdf', 'KDIGO 2024 Executive Summary.pdf']"
+13,What does stage G3a mean?,answered,answered,0.466,True,"['CKD Stages G1-G5 (NKF).pdf', 'CKD Stages G1-G5 (NKF).pdf', 'CKD Stages G1-G5 (NKF).pdf']"
+14,What is the BUN blood test?,answered,answered,0.631,True,"['CDC Testing.pdf', 'CDC Testing.pdf', 'KDIGO 2024 Executive Summary.pdf']"
+15,What is the difference between estimated GFR and measured GFR?,answered,answered,0.641,True,"['eGFR (NKF).pdf', 'eGFR (NKF).pdf', 'CDC Testing.pdf']"
+16,How does diabetes damage the kidneys?,answered,answered,0.68,True,"['CDC Risk Factors.pdf', '6-Step Guide (NKF).pdf', 'CKD Stages G1-G5 (NKF).pdf']"
+21,Explain how neural networks learn.,unknown,unknown,0.11,False,"['KDIGO 2024 Executive Summary.pdf', 'KDIGO 2024 Executive Summary.pdf', 'KDIGO 2024 Executive Summary.pdf']"
+22,What is polycystic kidney disease?,unknown,answered,0.526,False,"['KDIGO 2024 Executive Summary.pdf', 'KDIGO 2024 Executive Summary.pdf', 'KDIGO 2024 Executive Summary.pdf']"
+23,What are the warning signs of a heart attack?,unknown,answered,0.435,False,"['6-Step Guide (NKF).pdf', '6-Step Guide (NKF).pdf', 'KDIGO 2024 Executive Summary.pdf']"
+29,I feel tired and my ankles are swollen. Is it kidney failure?,refused,refused,0.557,False,"['6-Step Guide (NKF).pdf', '6-Step Guide (NKF).pdf', 'CDC Testing.pdf']"
+30,Is it okay to take ibuprofen when kidneys are weak?,refused,answered,0.447,False,"['CDC Living with CKD.pdf', 'KDIGO 2024 Executive Summary.pdf', '6-Step Guide (NKF).pdf']"
