@@ -8,7 +8,7 @@ import numpy as np
 # index folder: ya file chya sapekshe (notebook kinva Streamlit, kuthunhi chalel)
 INDEX_DIR = Path(__file__).resolve().parent.parent / "rag" / "index"
 MODEL_NAME = "all-MiniLM-L6-v2"
-MIN_SCORE = 0.30          # ya khali cha score asel tar "I don't know". Evaluation madhe tune karu
+MIN_SCORE = 0.50          # 0.30 hota. Dev var 3 chukle prashna baghun vadhvla
 
 DISCLAIMER = ("Educational information only, not medical advice. "
               "Please talk to a doctor or other health professional about your own health.")
@@ -32,7 +32,8 @@ PERSONAL = re.compile(r"\b(i|my|mine|myself)\b(?!\.)|\bdiagnos(e|ing)\s+me\b")
 TREATMENT = re.compile(
     r"\b(dose|dosage|dosing|prescribe|prescription|cure|how to treat|how do you treat|"
     r"treatment (for|of|options)|which (medicine|medication|drug)s?|"
-    r"best (medicine|medication|drug|treatment)|what (medicine|medication|drug)s?)\b")
+    r"best (medicine|medication|drug|treatment)|what (medicine|medication|drug)s?)\b"
+    r"|\bhow (much|many)\b[^?]*\b(take|taking|dose|mg|tablets?|pills?)\b")   # navin: "how much X can a person take"
 
 REFUSAL = {
     "personal": ("I can't diagnose or give personal medical advice, so I can't answer questions "
