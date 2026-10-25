@@ -10,7 +10,7 @@ import pandas as pd
 import streamlit as st
 
 from src import classifier as clf
-from src.rag import answer
+from src.rag import answer, warm_up
 
 st.set_page_config(page_title="CKD Risk & Clinical Copilot", page_icon="🩺", layout="wide")
 
@@ -25,6 +25,11 @@ def load_assets():
     explainer, names = clf.build_explainer(pipe, df)
     options, ranges = clf.input_options(df)
     return pipe, explainer, names, options, ranges, clf.pick_examples(df)
+
+@st.cache_resource                       # ekdach chalto, parat parat nahi
+def load_rag():
+    warm_up()                            # RAG model + index load
+    return True
 
 
 def is_missing(v):
@@ -172,3 +177,6 @@ with tab_rag:
     rag_tab()
 with tab_about:
     about_tab()
+# page display zalyavar model load karto, mhanje pahila prashna lagech yeto
+with st.spinner("Loading the search model in the background (first time only)..."):
+    load_rag()

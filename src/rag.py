@@ -51,10 +51,16 @@ def _load():
     if not _state:
         from sentence_transformers import SentenceTransformer
         with open(INDEX_DIR / "chunks.json", encoding="utf-8") as f:
-            _state["chunks"] = json.load(f)
-        _state["emb"] = np.load(INDEX_DIR / "embeddings.npy")
-        _state["model"] = SentenceTransformer(MODEL_NAME)
+            chunks = json.load(f)
+        emb = np.load(INDEX_DIR / "embeddings.npy")
+        model = SentenceTransformer(MODEL_NAME)
+        _state.update(chunks=chunks, emb=emb, model=model)   # sagla load zalyavar ch, ekatra
     return _state
+
+
+def warm_up():
+    """Model ani index aadhich load karto, mhanje pahila prashna fast yeto."""
+    _load()
 
 def search(question, k=3):
     s = _load()
@@ -71,6 +77,10 @@ def check_refusal(question):
     if TREATMENT.search(q):
         return "treatment"
     return None
+
+def _tidy(text):
+    """PDF madhun aalele faltu chinha (jase arrow) display saathi kaadhto."""
+    return text.replace("\u2198\ufe0f", "").replace("\u2198", "").strip()
 
 def _label(chunk):
     label = SOURCE_LABELS.get(chunk["source"], chunk["source"])
@@ -92,7 +102,7 @@ def answer(question, k=3, min_score=MIN_SCORE):
 
     lines, sources = [], []
     for n, (score, c) in enumerate(hits, start=1):       # rule 3: prattek passage la source
-        lines.append(f"[{n}] {c['text'][:350].strip()}...")
+        lines.append(f"[{n}] {_tidy(c['text'][:350])}...")
         sources.append(f"[{n}] {_label(c)} (match {score:.2f})")
     return {"status": "answered",
             "text": "Here are the most relevant passages from the documents:\n\n" + "\n\n".join(lines),
