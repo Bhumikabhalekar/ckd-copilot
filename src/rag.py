@@ -33,7 +33,7 @@ TREATMENT = re.compile(
     r"\b(dose|dosage|dosing|prescribe|prescription|cure|how to treat|how do you treat|"
     r"treatment (for|of|options)|which (medicine|medication|drug)s?|"
     r"best (medicine|medication|drug|treatment)|what (medicine|medication|drug)s?)\b"
-    r"|\bhow (much|many)\b[^?]*\b(take|taking|dose|mg|tablets?|pills?)\b")   # navin: "how much X can a person take"
+    r"|\bhow (much|many)\b[^?]*\b(take|taking|dose|mg|tablets?|pills?)\b")
 
 REFUSAL = {
     "personal": ("I can't diagnose or give personal medical advice, so I can't answer questions "
@@ -45,6 +45,7 @@ REFUSAL = {
 }
 
 _state = {}
+
 
 def _load():
     """Chunks, embeddings ani model ekdach load karto, mag cache thevto."""
@@ -62,12 +63,14 @@ def warm_up():
     """Model ani index aadhich load karto, mhanje pahila prashna fast yeto."""
     _load()
 
+
 def search(question, k=3):
     s = _load()
     q = s["model"].encode([question], normalize_embeddings=True)[0]   # prashna cha vector
     scores = s["emb"] @ q                                            # prattek chunk shi similarity
     top = scores.argsort()[::-1][:k]                                 # sarvat javal che k
     return [(float(scores[i]), s["chunks"][i]) for i in top]
+
 
 def check_refusal(question):
     """'personal' / 'treatment' / None."""
@@ -78,15 +81,25 @@ def check_refusal(question):
         return "treatment"
     return None
 
-def _tidy(text):
-    """PDF madhun aalele faltu chinha (jase arrow) display saathi kaadhto."""
-    return text.replace("\u2198\ufe0f", "").replace("\u2198", "").strip()
+
+def _snippet(text, limit=350):
+    """Passage dakhavnyaasathi swachh karto (index/score badalat nahi)."""
+    text = text.replace("\u2198\ufe0f", "").replace("\u2198", "").strip()   # PDF madhla arrow kaadhto
+    if text and text[0].islower():                          # chunk vakyachya/shabdachya madhun suru zala
+        m = re.search(r"[.!?]\s+(?=[A-Z])", text[:250])     # pudhcha purna vakya shodhto
+        text = text[m.end():] if m else text.split(" ", 1)[-1]   # nahi sapadla tar fakt tutlela shabda kaadhto
+    if len(text) > limit:                                   # shevti purna vakya var kapto
+        cut = text.rfind(". ", 0, limit)
+        text = text[:cut + 1] if cut > limit * 0.5 else text[:limit].rsplit(" ", 1)[0] + "..."
+    return text
+
 
 def _label(chunk):
     label = SOURCE_LABELS.get(chunk["source"], chunk["source"])
     if chunk["source"].startswith("KDIGO"):
         label += f", PDF p.{chunk['page']}"
     return label
+
 
 def answer(question, k=3, min_score=MIN_SCORE):
     reason = check_refusal(question)
@@ -102,7 +115,7 @@ def answer(question, k=3, min_score=MIN_SCORE):
 
     lines, sources = [], []
     for n, (score, c) in enumerate(hits, start=1):       # rule 3: prattek passage la source
-        lines.append(f"[{n}] {_tidy(c['text'][:350])}...")
+        lines.append(f"[{n}] {_snippet(c['text'])}")
         sources.append(f"[{n}] {_label(c)} (match {score:.2f})")
     return {"status": "answered",
             "text": "Here are the most relevant passages from the documents:\n\n" + "\n\n".join(lines),
