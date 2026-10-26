@@ -12,3 +12,8 @@ Downloaded on 21 Oct 2026. Used for educational purposes only.
 | CKD Stages G1-G5 (NKF).pdf | Stages of Chronic Kidney Disease (CKD) | National Kidney Foundation | https://www.kidney.org/kidney-topics/stages-chronic-kidney-disease-ckd | |
 | 6-Step Guide (NKF).pdf | 6-Step Guide to Protecting Kidney Health | National Kidney Foundation |https://www.kidney.org/kidney-topics/6-step-guide-to-protecting-kidney-health | |
 | KDIGO 2024 Executive Summary.pdf | Executive summary of the KDIGO 2024 CKD Guideline | KDIGO / Kidney International | https://doi.org/10.1016/j.kint.2023.10.016 | Kidney Int 2024;105(4):684-701, CC BY-NC-ND |
+
+## Public index
+`rag/index_public/` contains text excerpts and embeddings from CDC pages (US government content) and the
+KDIGO 2024 CKD Guideline executive summary (Levin et al., Kidney Int 2024, CC BY-NC-ND 4.0, credited here).
+National Kidney Foundation content is **not** included because its terms require permission for AI use.

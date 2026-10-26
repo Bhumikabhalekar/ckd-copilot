@@ -124,8 +124,8 @@ def classifier_tab():
 
 # ------------------------------------------------------------------ Tab 2: RAG
 def rag_tab():
-    st.write("Ask a general question about kidney health. Answers come only from CDC, National Kidney "
-             "Foundation and KDIGO documents, with sources. Personal medical questions are refused.")
+    st.write("Ask a general question about kidney health. Answers come only from CDC and KDIGO "
+             "documents, with sources. Personal medical questions are refused.")
     with st.form("rag_form"):
         question = st.text_input("Your question", placeholder="What is eGFR?")
         asked = st.form_submit_button("Ask")
@@ -163,7 +163,7 @@ Chronic Kidney Disease dataset, and a retrieval assistant over public kidney-hea
 - The document assistant can be wrong or miss relevant text. It may answer questions the documents only
   partly cover, and its refusal rules can miss unusual wording.
 
-**Sources:** CDC, National Kidney Foundation, KDIGO 2024 CKD Guideline (executive summary).
+**Sources:** CDC and the KDIGO 2024 CKD Guideline (executive summary).
 """)
 
 

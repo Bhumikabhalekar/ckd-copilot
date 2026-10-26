@@ -1,12 +1,13 @@
 """RAG helper: search + safety guardrails + cited answer (no LLM yet)."""
 import json
+import os
 import re
 from pathlib import Path
 
 import numpy as np
 
-# index folder: ya file chya sapekshe (notebook kinva Streamlit, kuthunhi chalel)
-INDEX_DIR = Path(__file__).resolve().parent.parent / "rag" / "index"
+# default = public index (CDC + KDIGO). Local full index (NKF sobat) saathi: CKD_RAG_INDEX=index
+INDEX_DIR = Path(__file__).resolve().parent.parent / "rag" / os.environ.get("CKD_RAG_INDEX", "index_public")
 MODEL_NAME = "all-MiniLM-L6-v2"
 MIN_SCORE = 0.50          # 0.30 hota. Dev var 3 chukle prashna baghun vadhvla
 
