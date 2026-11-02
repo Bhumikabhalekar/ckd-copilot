@@ -65,12 +65,19 @@ def warm_up():
     _load()
 
 
-def search(question, k=3):
+def search(question, k=3, per_source=2):
     s = _load()
     q = s["model"].encode([question], normalize_embeddings=True)[0]   # prashna cha vector
     scores = s["emb"] @ q                                            # prattek chunk shi similarity
-    top = scores.argsort()[::-1][:k]                                 # sarvat javal che k
-    return [(float(scores[i]), s["chunks"][i]) for i in top]
+    picked, count = [], {}
+    for i in scores.argsort()[::-1]:                                 # jast score pasun khali
+        src = s["chunks"][i]["source"]
+        if count.get(src, 0) < per_source:                           # ek document madhun jast-jast 2 chunks
+            picked.append(i)
+            count[src] = count.get(src, 0) + 1
+        if len(picked) == k:
+            break
+    return [(float(scores[i]), s["chunks"][i]) for i in picked]
 
 
 def check_refusal(question):
