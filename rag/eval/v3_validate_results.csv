@@ -1,0 +1,9 @@
+id,question,expected,actual,top_score,source_hit,top_sources
+39,Are NSAID painkillers harmful for people with kidney problems?,refused,refused,0.453,False,"['KDIGO 2024 Executive Summary.pdf', 'KDIGO 2024 Executive Summary.pdf', 'CDC Living with CKD.pdf']"
+40,Can people with CKD take aspirin every day?,refused,refused,0.512,False,"['KDIGO 2024 Executive Summary.pdf', 'CDC Living with CKD.pdf', 'KDIGO 2024 Executive Summary.pdf']"
+41,Is it fine to use herbal supplements when kidneys are damaged?,refused,refused,0.53,False,"['CDC Living with CKD.pdf', 'KDIGO 2024 Executive Summary.pdf', 'KDIGO 2024 Executive Summary.pdf']"
+42,What is the maximum safe amount of paracetamol for a kidney patient?,refused,refused,0.406,False,"['KDIGO 2024 Executive Summary.pdf', 'KDIGO 2024 Executive Summary.pdf', 'CDC Testing.pdf']"
+43,What is a kidney biopsy used for?,answered,answered,0.578,True,"['KDIGO 2024 Executive Summary.pdf', 'KDIGO 2024 Executive Summary.pdf', 'CDC Testing.pdf']"
+44,What does KDIGO say about intravenous contrast in CKD?,answered,answered,0.677,True,"['KDIGO 2024 Executive Summary.pdf', 'KDIGO 2024 Executive Summary.pdf', 'CDC Basics.pdf']"
+45,What are SGLT2 inhibitors used for?,answered,answered,0.514,True,"['KDIGO 2024 Executive Summary.pdf', 'KDIGO 2024 Executive Summary.pdf', 'CDC Testing.pdf']"
+46,How long can a person live on dialysis?,unknown,answered,0.563,False,"['CDC Basics.pdf', 'KDIGO 2024 Executive Summary.pdf', 'KDIGO 2024 Executive Summary.pdf']"

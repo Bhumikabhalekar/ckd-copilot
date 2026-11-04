@@ -35,6 +35,10 @@ TREATMENT = re.compile(
     r"treatment (for|of|options)|which (medicine|medication|drug)s?|"
     r"best (medicine|medication|drug|treatment)|what (medicine|medication|drug)s?)\b"
     r"|\bhow (much|many)\b[^?]*\b(take|taking|dose|mg|tablets?|pills?)\b")
+# 3) "is X safe / can people take X" prakarche advice prashna (kidney cha sandarbhat)
+KIDNEY = re.compile(r"\b(kidney|kidneys|ckd|renal|dialysis|nephropathy)\b")
+SAFETY = re.compile(r"\b(safe|safely|okay|ok|fine|harmful|dangerous|risky|advisable)\b")
+ACTION = re.compile(r"\b(can|could|may|should|must)\b[^?]*\b(take|taking|use|using|eat|eating|drink|drinking|start|stop|skip|avoid|combine|mix)\b")
 
 REFUSAL = {
     "personal": ("I can't diagnose or give personal medical advice, so I can't answer questions "
@@ -43,6 +47,9 @@ REFUSAL = {
                  "from the documents, for example 'What is eGFR?'."),
     "treatment": ("I can't give treatment, medicine or dosing advice. Please speak to a doctor. "
                   "I can answer general questions about kidney health from the documents."),
+    "advice": ("I can't say whether something is safe or advisable for kidney patients, because that is "
+                    "medical advice. Please ask a doctor or pharmacist. I can answer general questions about "
+                    "kidney health from the documents."),             
 }
 
 _state = {}
@@ -81,12 +88,14 @@ def search(question, k=3, per_source=2):
 
 
 def check_refusal(question):
-    """'personal' / 'treatment' / None."""
+    """'personal' / 'treatment' / 'advice' / None."""
     q = question.lower()
     if PERSONAL.search(q):
         return "personal"
     if TREATMENT.search(q):
         return "treatment"
+    if KIDNEY.search(q) and (SAFETY.search(q) or ACTION.search(q)):   # "is X safe / can patients take X"
+        return "advice"
     return None
 
 
@@ -126,5 +135,6 @@ def answer(question, k=3, min_score=MIN_SCORE):
         lines.append(f"[{n}] {_snippet(c['text'])}")
         sources.append(f"[{n}] {_label(c)} (match {score:.2f})")
     return {"status": "answered",
-            "text": "Here are the most relevant passages from the documents:\n\n" + "\n\n".join(lines),
+            "text": "Here are the most relevant passages from the documents. They may not answer your question "
+                    "directly, so please read the sources:\n\n" + "\n\n".join(lines),
             "sources": sources, "disclaimer": DISCLAIMER}
